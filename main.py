@@ -17,10 +17,11 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 my_user_id = os.environ["MY_USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
-
+HE_FENG_KEY = os.environ["HE_FENG_KEY"]
 
 def get_weather():
-    hefeng_key = "75ea4d1a686f47658a68c81c1ba75a65"
+
+    hefeng_key = HE_FENG_KEY
     location = '101190107'
     url = "https://devapi.qweather.com/v7/weather/now?key=" + hefeng_key + "&location=" + location
     res = requests.get(url).json()
