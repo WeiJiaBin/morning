@@ -17,7 +17,7 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 my_user_id = os.environ["MY_USER_ID"]
 template_id = os.environ["TEMPLATE_ID"]
-he_feng_key = os.environ["KEY"]
+he_feng_key = os.environ["APP_KEY"]
 
 def get_weather():
 
