@@ -17,11 +17,11 @@ app_secret = os.environ["APP_SECRET"]
 user_id = os.environ["USER_ID"]
 my_user_id = os.environ["MY_USER_ID"]
 # template_id = os.environ["TEMPLATE_ID"]
-template_id = "3jEHpwBx_Htqydk5qA2qey7rUOG1ROPdznlhOyOJfbE"
+template_id = "Fi1tmeT3E0Bcff3mKp7LVXZ3wsoBwpVYs0MMrUVPU7Q"
 he_feng_key = os.environ["APP_KEY"]
 
-def get_weather():
 
+def get_weather():
     hefeng_key = he_feng_key
     location = '101190107'
     url = "https://devapi.qweather.com/v7/weather/now?key=" + hefeng_key + "&location=" + location
@@ -29,6 +29,7 @@ def get_weather():
     weather = res['now']
     weather['text'] = city + "-" + weather['text']
     return weather['text'], weather['feelsLike']
+
 
 def get_count():
     delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -53,15 +54,45 @@ def get_random_color():
     return "#%06x" % random.randint(0, 0xFFFFFF)
 
 
+def split_string(string):
+    return [string[i:i + 20] for i in range(0, len(string), 20)]
+
+
+get_words_text = '我真的好喜欢你啊 第一句话是假的 第二句也是。对方申请做您心尖尖上的宝贝，接受请求吗？'
+get_words_text1 = ''
+get_words_text2 = ''
+get_words_text3 = ''
+get_words_text4 = ''
+get_words_text5 = ''
+
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
 get_words_text = get_words()
+textlist = split_string(get_words_text)
+for index in range(len(textlist)):
+    text_con = textlist[index]
+    if index == 0:
+        get_words_text1 = text_con
+    if index == 1:
+        get_words_text2 = text_con
+    if index == 2:
+        get_words_text3 = text_con
+    if index == 3:
+        get_words_text4 = text_con
+    if index == 4:
+        get_words_text5 = text_con
 random_color = get_random_color()
 # wea, temperature = "小宝宝", "520"
 data = {"weather": {"value": wea}, "temperature": {"value": temperature}, "love_days": {"value": get_count()},
-        "birthday_left": {"value": get_birthday()}, "words": {"value": get_words_text, "color": random_color}}
+        "birthday_left": {"value": get_birthday()}
+    , "words": {"value": get_words_text1, "color": random_color}
+    , "words2": {"value": get_words_text2, "color": random_color}
+    , "words3": {"value": get_words_text3, "color": random_color}
+    , "words4": {"value": get_words_text4, "color": random_color}
+    , "words5": {"value": get_words_text5, "color": random_color}
+        }
 res = wm.send_template(user_id, template_id, data)
 res2 = wm.send_template(my_user_id, template_id, data)
 print(res)
