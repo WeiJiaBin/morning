@@ -19,15 +19,18 @@ my_user_id = os.environ["MY_USER_ID"]
 # template_id = os.environ["TEMPLATE_ID"]
 template_id = "Fi1tmeT3E0Bcff3mKp7LVXZ3wsoBwpVYs0MMrUVPU7Q"
 he_feng_key = os.environ["APP_KEY"]
-
+locationMap={
+    '101300601':"梧州",
+    '101190107':"南京",
+}
 
 def get_weather():
     hefeng_key = he_feng_key
-    location = '101190107'
+    location = '101300601'  #'101190107'
     url = "https://devapi.qweather.com/v7/weather/now?key=" + hefeng_key + "&location=" + location
     res = requests.get(url).json()
     weather = res['now']
-    weather['text'] = city + "-" + weather['text']
+    weather['text'] = locationMap[location] + "-" + weather['text']
     return weather['text'], weather['feelsLike']
 
 
@@ -58,7 +61,7 @@ def split_string(string):
     return [string[i:i + 20] for i in range(0, len(string), 20)]
 
 
-get_words_text = '我真的好喜欢你啊 第一句话是假的 第二句也是。对方申请做您心尖尖上的宝贝，接受请求吗？'
+get_words_text = ''
 get_words_text1 = ''
 get_words_text2 = ''
 get_words_text3 = ''
